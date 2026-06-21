@@ -1,0 +1,65 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #0F0F0F;
+  color: #E8E0D4;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent text size inflation on iOS */
+  -webkit-text-size-adjust: 100%;
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior-y: none;
+}
+
+/* Prevent iOS input zoom (font-size: 16px set inline on inputs) */
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* Remove number spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Scrollbar — desktop only, invisible on mobile */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0F0F0F;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Safe area support for notched phones */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .bottom-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Tap highlight removal on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
