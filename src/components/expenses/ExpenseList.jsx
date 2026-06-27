@@ -3,9 +3,9 @@ import { css, T } from '../../styles/tokens';
 import { ExpenseCard } from './ExpenseCard';
 
 const FILTERS = [
-  { value: 'ALL',          label: 'All'         },
-  { value: 'NECESSARY',   label: 'Necessary'   },
-  { value: 'UNNECESSARY', label: 'Unnecessary' },
+  { value: 'ALL',          label: 'All'         , listHeading: 'ALL EXPENSES'},
+  { value: 'NECESSARY',   label: 'Necessary'   , listHeading: 'NECESSARY EXPENSES'},
+  { value: 'UNNECESSARY', label: 'Unnecessary' , listHeading: 'UNNECESSARY EXPENSES'}
 ];
 
 export function ExpenseList({ activeExpenses, onEdit, onDelete, onRecon, isMobile }) {
@@ -20,7 +20,7 @@ export function ExpenseList({ activeExpenses, onEdit, onDelete, onRecon, isMobil
   return (
     <>
       <div style={css.sectionHeader}>
-        <div style={css.sectionTitle}>All expenses</div>
+        <div style={css.sectionTitle}>{FILTERS.find(x=>x.value === filter).listHeading}</div>
         <div style={{ display: 'flex', gap: '5px' }}>
           {FILTERS.map(f => (
             <button key={f.value}
