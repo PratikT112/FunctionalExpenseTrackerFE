@@ -3,19 +3,33 @@ import { css, T } from '../../styles/tokens';
 import { ExpenseCard } from './ExpenseCard';
 
 const FILTERS = [
-  { value: 'ALL',          label: 'All'         , listHeading: 'ALL EXPENSES'},
-  { value: 'NECESSARY',   label: 'Necessary'   , listHeading: 'NECESSARY EXPENSES'},
-  { value: 'UNNECESSARY', label: 'Unnecessary' , listHeading: 'UNNECESSARY EXPENSES'}
+  { parameter: 'necessity', value: 'ALL',         label: 'All'         , listHeading: 'ALL EXPENSES'},
+  { parameter: 'necessity', value: 'NECESSARY',   label: 'Necessary'   , listHeading: 'NECESSARY EXPENSES'},
+  { parameter: 'necessity', value: 'UNNECESSARY', label: 'Unnecessary' , listHeading: 'UNNECESSARY EXPENSES'},
+  { parameter: 'expenseType', value: 'PERSONAL', label: 'Personal' , listHeading: 'PERSONAL EXPENSES'},
+  { parameter: 'expenseType', value: 'FAMILY', label: 'Family' , listHeading: 'FAMILY EXPENSES'}
 ];
 
 export function ExpenseList({ activeExpenses, onEdit, onDelete, onRecon, isMobile }) {
   const [filter, setFilter] = useState('ALL');
 
-  const visible = (
+  let visible;
+
+  let filterParameter = FILTERS.find((f)=>f.value === filter).parameter
+  if(filterParameter === 'necessity'){
+    visible = (
     filter === 'ALL'
       ? activeExpenses
       : activeExpenses.filter(e => e.expenseNecessity === filter)
-  ).sort((a, b) => b.expenseDate.localeCompare(a.expenseDate));
+    ).sort((a, b) => b.expenseDate.localeCompare(a.expenseDate));
+  } else if (filterParameter === 'expenseType'){
+    visible = (
+    filter === 'ALL'
+      ? activeExpenses
+      : activeExpenses.filter(e => e.expenseType === filter)
+    ).sort((a, b) => b.expenseDate.localeCompare(a.expenseDate));
+  }
+
 
   return (
     <>
