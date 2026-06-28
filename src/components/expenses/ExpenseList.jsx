@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { css, T } from '../../styles/tokens';
 import { ExpenseCard } from './ExpenseCard';
+import { AnimatedNumber } from './AnimatedNumber';
 
 const FILTERS = [
   { parameter: 'necessity', value: 'ALL',         label: 'All'         , listHeading: 'ALL EXPENSES'},
@@ -34,7 +35,7 @@ export function ExpenseList({ activeExpenses, onEdit, onDelete, onRecon, isMobil
   return (
     <>
       <div style={css.sectionHeader}>
-        <div style={css.sectionTitle}>{FILTERS.find(x=>x.value === filter).listHeading}</div>
+        <div style={css.sectionTitle}>{FILTERS.find(x=>x.value === filter).listHeading} - (<span><AnimatedNumber value={visible.reduce((s, e) => s + e.netExpenseAmount, 0)}/></span>) </div>
         <div style={{ display: 'flex', gap: '5px' }}>
           {FILTERS.map(f => (
             <button key={f.value}
