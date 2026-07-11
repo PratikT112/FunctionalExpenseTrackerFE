@@ -36,7 +36,7 @@ export function ExpenseCard({ expense, onEdit, onDelete, onRecon, isMobile }) {
             <div style={{ ...css.expenseMeta, marginTop: '6px' }}>
               <span style={css.chip(T.surfaceRaised, T.textMuted)}>{cat}</span>
               <span style={css.chip(T.typeDim, T.type)}>{expense.expenseType === 'FAMILY' ? '◎ Family' : '○ Personal'}</span>
-              <span style={{ fontSize: '11px', color: T.textFaint }}>{expense.expenseDate}</span>
+              <span style={{ fontSize: '11px', color: T.textMuted }}>{expense.expenseDate}</span>
               {isFullyRecon && <span style={css.chip(T.success + '22', T.success)}>Recon</span>}
             </div>
             <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
@@ -61,7 +61,7 @@ export function ExpenseCard({ expense, onEdit, onDelete, onRecon, isMobile }) {
           <span style={css.chip(T.surfaceRaised, T.textMuted)}>{cat}</span>
           <span style={css.chip(T.surfaceRaised, T.textMuted)}>{pm}</span>
           <span style={css.chip(T.typeDim, T.type)}>{expense.expenseType === 'FAMILY' ? '◎ Family' : '○ Personal'}</span>
-          <span style={{ fontSize: '11px', color: T.textFaint }}>{expense.expenseDate}</span>
+          <span style={{ fontSize: '11px', color: T.textMuted }}>{expense.expenseDate}</span>
           {isFullyRecon && <span style={css.chip(T.success + '22', T.success)}>Fully recon</span>}
           {hasRecon && !isFullyRecon && <span style={css.chip(T.accent + '22', T.accent)}>Partial recon</span>}
         </div>
