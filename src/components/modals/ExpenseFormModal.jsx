@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { css, T } from '../../styles/tokens';
 import { fmt, today } from '../../utils/formatters';
+import { DescriptionAutocomplete } from './DescriptionAutocomplete';
+
 
 const EMPTY_FORM = {
   expenseAmount:      '',
@@ -12,7 +14,7 @@ const EMPTY_FORM = {
   expenseType:        'PERSONAL',
 };
 
-export function ExpenseFormModal({ expense, categories, paymentMethods, onSave, onClose, isMobile }) {
+export function ExpenseFormModal({ expense, categories, paymentMethods, pastExpenses, onSave, onClose, isMobile }) {
   const isEdit    = !!expense;
   const [submitting, setSubmitting] = useState(false);
   const [error,      setError]      = useState('');
@@ -36,6 +38,21 @@ export function ExpenseFormModal({ expense, categories, paymentMethods, onSave, 
   );
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+
+  // Called when the user picks a suggestion from the dropdown.
+  // Auto-fills the four fields that are typically identical for routine expenses.
+  // Amount and date are intentionally NOT filled — those always differ.
+  const handleSuggestionSelect = (pastExpense) => {
+    setForm(f => ({
+      ...f,
+      expenseDescription: pastExpense.expenseDescription,
+      categoryName:       pastExpense.categoryName      || f.categoryName,
+      paymentMethod:      pastExpense.paymentMethod     || f.paymentMethod,
+      expenseNecessity:   pastExpense.expenseNecessity  || f.expenseNecessity,
+      expenseType:        pastExpense.expenseType       || f.expenseType,
+    }));
+  };
 
   const handleSave = async () => {
     if (!form.expenseAmount || !form.expenseDate || !form.expenseDescription || !form.categoryName) return;
@@ -101,11 +118,18 @@ export function ExpenseFormModal({ expense, categories, paymentMethods, onSave, 
             value={form.expenseDate} max={fmt(today)} onChange={e => set('expenseDate', e.target.value)} />
         </div>
 
+        {/* Description — replaced with autocomplete */}
         <div style={css.formRow}>
           <label style={css.label}>Description</label>
-          <input style={{ ...css.input, fontSize: '16px' }} type="text"
-            value={form.expenseDescription} onChange={e => set('expenseDescription', e.target.value)}
-            placeholder="What was this for?" />
+          <DescriptionAutocomplete
+            value={form.expenseDescription}
+            onChange={v => set('expenseDescription', v)}
+            onSelect={handleSuggestionSelect}
+            pastExpenses={pastExpenses || []}
+            isMobile={isMobile}
+            inputStyle={{ ...css.input, fontSize: '16px' }}
+            placeholder="What was this for?"
+          />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '12px' }}>
