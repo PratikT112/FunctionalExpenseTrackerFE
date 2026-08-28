@@ -32,6 +32,7 @@ export function DescriptionAutocomplete({
   const inputRef  = useRef(null);
   const listRef   = useRef(null);
   const wrapRef   = useRef(null);
+  const justPicked = useRef(false);
 
   // ── Build deduplicated suggestion list ─────────────────────────────────────
   // Keep only the most recent expense per unique description (case-insensitive).
@@ -96,11 +97,11 @@ export function DescriptionAutocomplete({
   };
 
   const pick = (expense) => {
+    justPicked.current = true;
     onChange(expense.expenseDescription);    // fill in the full description text
     onSelect(expense);                       // parent fills other fields
     setOpen(false);
     setHighlighted(-1);
-    inputRef.current?.blur();
   };
 
   // ── Highlight the matching prefix in the suggestion label ──────────────────
