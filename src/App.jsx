@@ -179,7 +179,6 @@ export default function App() {
           expense={editExpense}
           categories={categories}
           paymentMethods={paymentMethods}
-          pastExpenses={activeExpenses}
           onSave={handleSaveExpense}
           onClose={() => { setShowAddExpense(false); setEditExpense(null); }}
           isMobile={isMobile}
